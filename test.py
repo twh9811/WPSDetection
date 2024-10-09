@@ -15,7 +15,8 @@ def google_wps_triangulation(desired_mac):
     Loops until accuracy is improved to threshold.
     """
     attempt = 0
-    accuracy_threshold = 200
+    accuracy_threshold = 120
+    accurate_bssids =  set()
     while attempt < 10:
 
         data = {
@@ -31,28 +32,50 @@ def google_wps_triangulation(desired_mac):
         # data["wifiAccessPoints"].append({"macAddress":"08-36-c9-95-ee-71", "signalStrength":-57, "signalToNoiseRatio":40})
         # data["wifiAccessPoints"].append({"macAddress":"a0-55-1f-68-1d-39", "signalStrength":-57, "signalToNoiseRatio":40})
         
+        # # Use alleged accurate bssids
+        # if len(accurate_bssids) > 0:
+        #     print("Using accurate BSSIDS...")
+        #     for data_point in accurate_bssids:
+        #         data["wifiAccessPoints"].append(data_point)
+        # # Loop through inaccurate locations in an attempt to get better ones
+        # else:
+        #     print("Using inaccurate BSSIDS...")
         bssids = bssid_collection_via_wigle()
-        select_amount = 25
-        random_bssids = random.sample(bssids, select_amount)
-        for bssid in random_bssids:
+        for bssid in bssids:
             access_point = {"macAddress":bssid, "signalStrength":-90, "signalToNoiseRatio":15}
             data["wifiAccessPoints"].append(access_point)
-        
+            
         response = requests.post(MAPS_URL, json=data)
 
         received_location = response.json()
         
+        # Check accuracy. If its good, add these to a list with a better signal strength to signify these should be closer to the desired location.
         if received_location['accuracy'] < accuracy_threshold:
             print("Good Accuracy", received_location)
-            break
+            for bssid in bssids:
+                accurate_bssids.add(bssid)
+        # Otherwise ignore bssids, try again.
         print("Too High", received_location)
         attempt += 1
+        
+    data = {
+        "wifiAccessPoints": []
+    }
+        
+    prioritized_access_point = {"macAddress":desired_mac, "signalStrength":-57, "signalToNoiseRatio":40}
+    data["wifiAccessPoints"].append(prioritized_access_point)
+    for bssid in accurate_bssids:
+        access_point = {"macAddress":bssid, "signalStrength":-85, "signalToNoiseRatio":20}
+        data["wifiAccessPoints"].append(access_point)
+    response = requests.post(MAPS_URL, json=data)
 
+    received_location = response.json()
+    print(received_location)
 def bssid_collection_via_wigle():
     """
     Creates a box outlining a specific geographic region, returns bssids in that location.
     """
-    mod_range = [-.1, 1]
+    mod_range = [-.1, .1]
     lat_min_modifier = random.uniform(mod_range[0], mod_range[1])
     long_min_modifier = random.uniform(mod_range[0], mod_range[1])
     lat_max_modifier = random.uniform(mod_range[0], mod_range[1])
@@ -93,11 +116,8 @@ def bssid_collection_via_wigle():
             for network in results:
                 #print(network)
                 bssid = network.get("netid")
-                lat = network.get("trilat")
-                long = network.get("trilong")
-                # Extra check because the query parameters dont seem to work consistently....
-                if min_lat <= lat <= max_lat and min_long <= long <= max_long:
-                    bssids.append(bssid)
+                bssids.append(bssid)
+            print(bssids)
             return bssids
         else:
             print("No Networks Found")
