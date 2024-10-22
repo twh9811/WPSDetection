@@ -9,7 +9,7 @@ WIGLE_API_KEY = os.getenv("WIGLE_API_KEY")
 MAPS_URL = "https://www.googleapis.com/geolocation/v1/geolocate?key=" + API_KEY
 WIGLE_URL = "https://api.wigle.net/api/v2/network/search"
 
-def google_wps_triangulation(desired_mac):
+def google_wps_triangulation(desired_mac, close_bssids=None):
     """
     Provides Google Maps WPS a list of BSSIDs in a specific r egion and attempts to locate a priority BSSID in that region.
     Loops until accuracy is improved to threshold.
@@ -31,19 +31,15 @@ def google_wps_triangulation(desired_mac):
         # data["wifiAccessPoints"].append({"macAddress":"f8-5b-3b-e0-05-fa", "signalStrength":-57, "signalToNoiseRatio":40})
         # data["wifiAccessPoints"].append({"macAddress":"08-36-c9-95-ee-71", "signalStrength":-57, "signalToNoiseRatio":40})
         # data["wifiAccessPoints"].append({"macAddress":"a0-55-1f-68-1d-39", "signalStrength":-57, "signalToNoiseRatio":40})
-        
-        # # Use alleged accurate bssids
-        # if len(accurate_bssids) > 0:
-        #     print("Using accurate BSSIDS...")
-        #     for data_point in accurate_bssids:
-        #         data["wifiAccessPoints"].append(data_point)
-        # # Loop through inaccurate locations in an attempt to get better ones
-        # else:
-        #     print("Using inaccurate BSSIDS...")
-        bssids = bssid_collection_via_wigle()
-        for bssid in bssids:
-            access_point = {"macAddress":bssid, "signalStrength":-90, "signalToNoiseRatio":15}
-            data["wifiAccessPoints"].append(access_point)
+        if(close_bssids is not None):
+            for bssid in close_bssids:
+                access_point = {"macAddress":bssid, "signalStrength":-75, "signalToNoiseRatio":25}
+                data["wifiAccessPoints"].append(access_point)
+        else:
+            bssids = bssid_collection_via_wigle()
+            for bssid in bssids:
+                access_point = {"macAddress":bssid, "signalStrength":-90, "signalToNoiseRatio":15}
+                data["wifiAccessPoints"].append(access_point)
             
         response = requests.post(MAPS_URL, json=data)
 
@@ -54,8 +50,9 @@ def google_wps_triangulation(desired_mac):
             print("Good Accuracy", received_location)
             for bssid in bssids:
                 accurate_bssids.add(bssid)
-        # Otherwise ignore bssids, try again.
-        print("Too High", received_location)
+        else:
+            # Otherwise ignore bssids, try again.
+            print("Too High", received_location)
         attempt += 1
         
     data = {
@@ -71,6 +68,8 @@ def google_wps_triangulation(desired_mac):
 
     received_location = response.json()
     print(received_location)
+    return accurate_bssids
+
 def bssid_collection_via_wigle():
     """
     Creates a box outlining a specific geographic region, returns bssids in that location.
@@ -114,10 +113,8 @@ def bssid_collection_via_wigle():
         if response.get("success"):
             results = response.get("results")
             for network in results:
-                #print(network)
                 bssid = network.get("netid")
                 bssids.append(bssid)
-            print(bssids)
             return bssids
         else:
             print("No Networks Found")
@@ -125,9 +122,15 @@ def bssid_collection_via_wigle():
         print("Query Error:", response.status_code, response.reason, response.text)
     
 def main():
-    #test_mac = "E8-65-38-02-4A-6F"
+    max_tries = 3
     test_mac = "80-78-71-c7-f4-96"
-    google_wps_triangulation(test_mac)
-    
+    close_bssids = set()
+    for i in range(max_tries):
+        print("Try 1")
+        if(i == 0):
+            curr_set = google_wps_triangulation(test_mac)
+        else:
+            curr_set = google_wps_triangulation(test_mac, close_bssids)
+        close_bssids.update(curr_set)
 if __name__ == "__main__":
     main()
