@@ -10,6 +10,7 @@ MAPS_URL = "https://www.googleapis.com/geolocation/v1/geolocate?key=" + API_KEY
 WIGLE_URL = "https://api.wigle.net/api/v2/network/search"
 
 def google_wps_triangulation(desired_mac, desired_location=None):
+    print(desired_location)
     accuracy_threshold = 120
     close_locations = []
     while len(close_locations) < 3:
@@ -29,7 +30,7 @@ def google_wps_triangulation(desired_mac, desired_location=None):
         if(desired_location is None):
             bssids = bssid_collection_via_wigle()
         else:
-            bssids = bssid_collection_via_wigle(triangulated_location[0], triangulated_location[1])
+            bssids = bssid_collection_via_wigle(desired_location[0], desired_location[1])
             
         for bssid in bssids:
             access_point = {"macAddress":bssid, "signalStrength":-90, "signalToNoiseRatio":15}
@@ -42,12 +43,12 @@ def google_wps_triangulation(desired_mac, desired_location=None):
         if received_location['accuracy'] < accuracy_threshold:
             print("Good Accuracy", received_location)
             coordinates = received_location['location']
-            close_locations.append([coordinates['lat'],coordinates['long']])
+            close_locations.append([coordinates['lat'],coordinates['lng']])
         else:
             print("Too High", received_location)
 
-    central_lat = sum(location[0] for location in close_locations)
-    central_long = sum(location[1] for location in close_locations)
+    central_lat = sum(location[0] for location in close_locations) / len(close_locations)
+    central_long = sum(location[1] for location in close_locations) / len(close_locations)
     triangulated_location = [central_lat, central_long]
     return triangulated_location
     
