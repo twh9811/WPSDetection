@@ -9,7 +9,16 @@ WIGLE_API_KEY = os.getenv("WIGLE_API_KEY")
 MAPS_URL = "https://www.googleapis.com/geolocation/v1/geolocate?key=" + API_KEY
 WIGLE_URL = "https://api.wigle.net/api/v2/network/search"
 
-def google_wps_triangulation(desired_mac, desired_location=None):
+
+def log(data, accurate):
+    filename = "logs/inaccurate_log.txt"
+    if(accurate):
+        filename = "logs/accurate_log.txt"
+        
+    file = open(filename, "a")
+    file.write(str(data) + "\n")
+    
+def google_wps_triangulation(desired_mac, used_locations, desired_location=None):
     print(desired_location)
     accuracy_threshold = 120
     close_locations = []
@@ -40,12 +49,19 @@ def google_wps_triangulation(desired_mac, desired_location=None):
 
         received_location = response.json()
 
+        log_accurate = False
         if received_location['accuracy'] < accuracy_threshold:
-            print("Good Accuracy", received_location)
+            str_loc_rep = str(received_location)
+            if str_loc_rep in used_locations:
+                continue
             coordinates = received_location['location']
             close_locations.append([coordinates['lat'],coordinates['lng']])
+            log_accurate = True
+            used_locations.add(str_loc_rep)
+            print("Good Accuracy", received_location)
         else:
             print("Too High", received_location)
+        log(received_location, log_accurate)
 
     central_lat = sum(location[0] for location in close_locations) / len(close_locations)
     central_long = sum(location[1] for location in close_locations) / len(close_locations)
@@ -108,11 +124,12 @@ def main():
     max_tries = 3
     test_mac = "80-78-71-c7-f4-96"
     triangulated_location = None
+    used_locations = set()
     for i in range(max_tries):
         print("Try", i+1)
         if(triangulated_location is None):
-            triangulated_location = google_wps_triangulation(test_mac)
+            triangulated_location = google_wps_triangulation(test_mac, used_locations)
         else:
-            triangulated_location = google_wps_triangulation(test_mac, triangulated_location)
+            triangulated_location = google_wps_triangulation(test_mac, used_locations, triangulated_location)
 if __name__ == "__main__":
     main()
