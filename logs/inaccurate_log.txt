@@ -1,0 +1,13 @@
+{'location': {'lat': 43.2215213, 'lng': -77.6295679}, 'accuracy': 1923}
+{'location': {'lat': 43.2215213, 'lng': -77.6295679}, 'accuracy': 1923}
+{'location': {'lat': 43.2215213, 'lng': -77.6295679}, 'accuracy': 1923}
+{'location': {'lat': 43.2215213, 'lng': -77.6295679}, 'accuracy': 1923}
+{'location': {'lat': 43.2215213, 'lng': -77.6295679}, 'accuracy': 1923}
+{'location': {'lat': 43.2215213, 'lng': -77.6295679}, 'accuracy': 1923}
+{'location': {'lat': 43.2215213, 'lng': -77.6295679}, 'accuracy': 1923}
+{'location': {'lat': 43.2215213, 'lng': -77.6295679}, 'accuracy': 1923}
+{'location': {'lat': 43.2215213, 'lng': -77.6295679}, 'accuracy': 1923}
+{'location': {'lat': 43.2215213, 'lng': -77.6295679}, 'accuracy': 1923}
+{'location': {'lat': 43.2215213, 'lng': -77.6295679}, 'accuracy': 1923}
+{'location': {'lat': 43.2215213, 'lng': -77.6295679}, 'accuracy': 1923}
+{'location': {'lat': 43.2215213, 'lng': -77.6295679}, 'accuracy': 1923}

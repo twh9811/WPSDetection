@@ -25,7 +25,13 @@ def google_wps_triangulation(desired_mac, used_locations, desired_location=None)
     while len(close_locations) < 3:
 
         data = {
-            "wifiAccessPoints": []
+            "wifiAccessPoints": [],
+            "cellTowers": [
+                {"cellId": 18713601, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480, "signalStrength": -65},
+                {"cellId": 18713602, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480, "signalStrength": -104},
+                { "cellId": 18713603, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480, "signalStrength": -63},
+                {"cellId": 18713612, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480,"signalStrength": -68}
+                ]
         }
         
         prioritized_access_point = {"macAddress":desired_mac, "signalStrength":-57, "signalToNoiseRatio":40}
