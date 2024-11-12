@@ -1,1 +1,13 @@
-{'location': {'lat': 43.2032259, 'lng': -77.6288038}, 'accuracy': 110}
+{'location': {'lat': 43.2032259, 'lng': -77.6288038}, 'accuracy': 110}          Y
+{'location': {'lat': 43.1353945, 'lng': -77.5131531}, 'accuracy': 110}          N
+{'location': {'lat': 43.2032259, 'lng': -77.6288038}, 'accuracy': 110}          Y
+{'location': {'lat': 43.1902649, 'lng': -77.4990362}, 'accuracy': 110}          N
+{'location': {'lat': 43.2107964, 'lng': -77.4525272}, 'accuracy': 83.488}       N    
+{'location': {'lat': 43.2647368, 'lng': -77.6182853}, 'accuracy': 68.774}       Y
+{'location': {'lat': 43.1898896, 'lng': -77.4989813}, 'accuracy': 110}          N
+{'location': {'lat': 43.2569249, 'lng': -77.4654289}, 'accuracy': 32.382}       N
+{'location': {'lat': 43.2253277, 'lng': -77.4764237}, 'accuracy': 110}          N
+{'location': {'lat': 43.220726, 'lng': -77.4760962}, 'accuracy': 110}           N
+{'location': {'lat': 43.2078065, 'lng': -77.4940938}, 'accuracy': 40.732}       N # Introduce Cell Towers
+{'location': {'lat': 43.2746702, 'lng': -77.637748}, 'accuracy': 110}           N
+{'location': {'lat': 43.2032259, 'lng': -77.6288038}, 'accuracy': 110}          Y

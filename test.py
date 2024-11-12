@@ -9,7 +9,6 @@ WIGLE_API_KEY = os.getenv("WIGLE_API_KEY")
 MAPS_URL = "https://www.googleapis.com/geolocation/v1/geolocate?key=" + API_KEY
 WIGLE_URL = "https://api.wigle.net/api/v2/network/search"
 
-
 def log(data, accurate):
     filename = "logs/inaccurate_log.txt"
     if(accurate):
@@ -27,8 +26,11 @@ def google_wps_triangulation(desired_mac, used_locations, desired_location=None)
         data = {
             "wifiAccessPoints": [],
             "cellTowers": [
+                # Verizon 4G LTE
                 {"cellId": 18713601, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480, "signalStrength": -65},
-                {"cellId": 18713612, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480,"signalStrength": -68}
+                {"cellId": 18713612, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480,"signalStrength": -68},
+                # T-Mobile
+                {"cellId": 11812099, "locationAreaCode": 22527, "mobileCountryCode": 310, "mobileNetworkCode": 260, "signalStrength": -72}
                 ]
         }
         
@@ -135,5 +137,6 @@ def main():
             triangulated_location = google_wps_triangulation(test_mac, used_locations)
         else:
             triangulated_location = google_wps_triangulation(test_mac, used_locations, triangulated_location)
+    print("Final Est. Location:", triangulated_location)
 if __name__ == "__main__":
     main()
