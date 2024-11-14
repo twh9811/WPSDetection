@@ -19,7 +19,7 @@ def log(data, accurate):
     
 def google_wps_triangulation(desired_mac, used_locations, desired_location=None):
     print(desired_location)
-    accuracy_threshold = 120
+    accuracy_threshold = 150
     close_locations = []
     while len(close_locations) < 3:
 

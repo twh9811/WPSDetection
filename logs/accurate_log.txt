@@ -8,6 +8,18 @@
 {'location': {'lat': 43.2569249, 'lng': -77.4654289}, 'accuracy': 32.382}       N
 {'location': {'lat': 43.2253277, 'lng': -77.4764237}, 'accuracy': 110}          N
 {'location': {'lat': 43.220726, 'lng': -77.4760962}, 'accuracy': 110}           N
-{'location': {'lat': 43.2078065, 'lng': -77.4940938}, 'accuracy': 40.732}       N # Introduce Cell Towers
+{'location': {'lat': 43.2078065, 'lng': -77.4940938}, 'accuracy': 40.732}       N
 {'location': {'lat': 43.2746702, 'lng': -77.637748}, 'accuracy': 110}           N
 {'location': {'lat': 43.2032259, 'lng': -77.6288038}, 'accuracy': 110}          Y
+{'location': {'lat': 43.2477681, 'lng': -77.4994053}, 'accuracy': 66.543}       N
+{'location': {'lat': 43.1811017, 'lng': -77.5329954}, 'accuracy': 110}          N
+{'location': {'lat': 43.2032259, 'lng': -77.6288038}, 'accuracy': 110}          Y
+{'location': {'lat': 43.2064838, 'lng': -77.5124004}, 'accuracy': 110}          N
+{'location': {'lat': 43.2121015, 'lng': -77.4619073}, 'accuracy': 110}          N
+{'location': {'lat': 43.2585751, 'lng': -77.4553086}, 'accuracy': 59.336}       N
+{'location': {'lat': 43.2136864, 'lng': -77.4497913}, 'accuracy': 110}          N
+{'location': {'lat': 43.2282164, 'lng': -77.5716487}, 'accuracy': 110}          Y(?)
+{'location': {'lat': 43.2510821, 'lng': -77.4449502}, 'accuracy': 110}          N
+{'location': {'lat': 43.2467105, 'lng': -77.5906861}, 'accuracy': 135.779}      Y(?)
+{'location': {'lat': 43.2746673, 'lng': -77.6377515}, 'accuracy': 110}          Y(?)
+{'location': {'lat': 43.175651, 'lng': -77.5150863}, 'accuracy': 110}           N
