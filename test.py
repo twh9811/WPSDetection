@@ -16,6 +16,7 @@ def log(data, accurate):
         
     file = open(filename, "a")
     file.write(str(data) + "\n")
+    file.close()
     
 def google_wps_triangulation(desired_mac, used_locations, desired_location=None):
     print(desired_location)
