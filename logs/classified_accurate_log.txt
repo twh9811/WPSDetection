@@ -24,14 +24,14 @@
 {"location": {"lat": 43.2746673, "lng": -77.6377515}, "accuracy": 110, "tag": "Y"}
 {"location": {"lat": 43.175651, "lng": -77.5150863}, "accuracy": 110, "tag": "N"}
 {"location": {"lat": 43.2746673, "lng": -77.6377515}, "accuracy": 110, "tag": "Y"}
-{"location": {"lat": 43.191144, "lng": -77.5710421}, "accuracy": 110, "tag": "Y"}
+{"location": {"lat": 43.191144, "lng": -77.5710421}, "accuracy": 110, "tag": "N"}
 {"location": {"lat": 43.2064838, "lng": -77.5124004}, "accuracy": 110, "tag": "N"}
 {"location": {"lat": 43.2101415, "lng": -77.5981696}, "accuracy": 44.005, "tag": "Y"}
 {"location": {"lat": 43.2603844, "lng": -77.6469633}, "accuracy": 70.085, "tag": "Y"}
 {"location": {"lat": 43.2032259, "lng": -77.6288038}, "accuracy": 110, "tag": "Y"}
-{"location": {"lat": 43.276604, "lng": -77.6450379}, "accuracy": 40.469, "tag": "Y"}
+{"location": {"lat": 43.276604, "lng": -77.6450379}, "accuracy": 40.469, "tag": "N"}
 {"location": {"lat": 43.1807703, "lng": -77.5358456}, "accuracy": 63.712, "tag": "N"}
 {"location": {"lat": 43.3069321, "lng": -77.7048467}, "accuracy": 74.913, "tag": "N"}
 {"location": {"lat": 43.2059417, "lng": -77.5122576}, "accuracy": 110, "tag": "N"}
-{"location": {"lat": 43.1831878, "lng": -77.6078813}, "accuracy": 57.502, "tag": "Y"}
+{"location": {"lat": 43.1831878, "lng": -77.6078813}, "accuracy": 57.502, "tag": "N"}
 {"location": {"lat": 43.2591865, "lng": -77.454894}, "accuracy": 103.565, "tag": "N"}
