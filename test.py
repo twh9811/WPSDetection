@@ -76,7 +76,7 @@ def google_wps_triangulation(desired_mac, used_locations, desired_location=None)
     return triangulated_location
     
 # Irondequoit (43.21313319463426, -77.5818301738431)
-def bssid_collection_via_wigle(lat=43.21, long=-77.58):
+def bssid_collection_via_wigle(lat=43.21313319463426, long=-77.5818301738431):
 
     mod_range = [-.1, .1]
     lat_min_modifier = random.uniform(mod_range[0], mod_range[1])
