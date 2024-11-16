@@ -3,7 +3,8 @@ from geopy import distance
 classified_logs = "logs/classified_accurate_log.txt"
 normal_logs = "logs/accurate_log.txt"
 # How can we update this to reflect the actual location better? This determines the classification math...
-STARTING_CENTER_POINT = (43.234806262034226, -77.62164262024581)
+# STARTING_CENTER_POINT = (43.234806262034226, -77.62164262024581)
+STARTING_CENTER_POINT = (43.214017478656366, -77.57894640208245)
 
 def check_radius(given_point):
     # Kilometers 
