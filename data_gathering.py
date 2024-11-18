@@ -43,7 +43,7 @@ def google_wps_triangulation(desired_mac, used_locations, desired_location):
     while len(close_locations) < 3:
 
         data = {
-            "wifiAccessPoints": [],
+            "wifiAccessPoints": [{"macAddress":desired_mac, "signalStrength":-57, "signalToNoiseRatio":40}],
             "cellTowers": [
                 # Verizon 4G LTE
                 {"cellId": 18713601, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480, "signalStrength": -65},
@@ -53,16 +53,8 @@ def google_wps_triangulation(desired_mac, used_locations, desired_location):
                 ]
         }
         
-        prioritized_access_point = {"macAddress":desired_mac, "signalStrength":-57, "signalToNoiseRatio":40}
-        # append it first for processing priority (?)
-        data["wifiAccessPoints"].append(prioritized_access_point)
-        # Neighbor WIFI...
-        # data["wifiAccessPoints"].append({"macAddress":"4c-19-5d-4f-62-21", "signalStrength":-57, "signalToNoiseRatio":40})
-        # data["wifiAccessPoints"].append({"macAddress":"f8-5b-3b-e0-05-fa", "signalStrength":-57, "signalToNoiseRatio":40})
-        # data["wifiAccessPoints"].append({"macAddress":"08-36-c9-95-ee-71", "signalStrength":-57, "signalToNoiseRatio":40})
-        # data["wifiAccessPoints"].append({"macAddress":"a0-55-1f-68-1d-39", "signalStrength":-57, "signalToNoiseRatio":40})
         bssids = bssid_collection_via_wigle(desired_location[0], desired_location[1])
-            
+ 
         for bssid in bssids:
             access_point = {"macAddress":bssid, "signalStrength":-90, "signalToNoiseRatio":15}
             data["wifiAccessPoints"].append(access_point)
@@ -90,8 +82,7 @@ def google_wps_triangulation(desired_mac, used_locations, desired_location):
     triangulated_location = [central_lat, central_long]
     return triangulated_location
     
-# 43.2260006, -77.6435763
-def bssid_collection_via_wigle(lat=43.2260006, long=-77.6435763):
+def bssid_collection_via_wigle(lat, long):
 
     mod_range = [-.1, .1]
     lat_min_modifier = random.uniform(mod_range[0], mod_range[1])
