@@ -9,6 +9,14 @@ WIGLE_API_KEY = os.getenv("WIGLE_API_KEY")
 MAPS_URL = "https://www.googleapis.com/geolocation/v1/geolocate?key=" + API_KEY
 WIGLE_URL = "https://api.wigle.net/api/v2/network/search"
 
+CELL_TOWERS = [
+            # Verizon 4G LTE
+            {"cellId": 18713601, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480, "signalStrength": -65},
+            {"cellId": 18713612, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480,"signalStrength": -68},
+            # T-Mobile
+            {"cellId": 11812099, "locationAreaCode": 22527, "mobileCountryCode": 310, "mobileNetworkCode": 260, "signalStrength": -72}
+            ]
+
 def log(data, accurate):
     filename = "logs/inaccurate_log.txt"
     if(accurate):
@@ -18,17 +26,10 @@ def log(data, accurate):
     file.write(str(data) + "\n")
     file.close()
 
-
 def initial_location_estimation(target_mac):
     data = {
         "wifiAccessPoints": [{"macAddress":target_mac, "signalStrength":-57, "signalToNoiseRatio":40}],
-        "cellTowers": [
-            # Verizon 4G LTE
-            {"cellId": 18713601, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480, "signalStrength": -65},
-            {"cellId": 18713612, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480,"signalStrength": -68},
-            # T-Mobile
-            {"cellId": 11812099, "locationAreaCode": 22527, "mobileCountryCode": 310, "mobileNetworkCode": 260, "signalStrength": -72}
-        ]
+        "cellTowers": CELL_TOWERS 
     }
     
     response = requests.post(MAPS_URL, json=data)
@@ -44,13 +45,7 @@ def google_wps_triangulation(desired_mac, used_locations, desired_location):
 
         data = {
             "wifiAccessPoints": [{"macAddress":desired_mac, "signalStrength":-57, "signalToNoiseRatio":40}],
-            "cellTowers": [
-                # Verizon 4G LTE
-                {"cellId": 18713601, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480, "signalStrength": -65},
-                {"cellId": 18713612, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480,"signalStrength": -68},
-                # T-Mobile
-                {"cellId": 11812099, "locationAreaCode": 22527, "mobileCountryCode": 310, "mobileNetworkCode": 260, "signalStrength": -72}
-                ]
+            "cellTowers": CELL_TOWERS
         }
         
         bssids = bssid_collection_via_wigle(desired_location[0], desired_location[1])
