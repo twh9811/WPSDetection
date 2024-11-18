@@ -79,7 +79,7 @@ def google_wps_triangulation(desired_mac, used_locations, desired_location):
     
 def bssid_collection_via_wigle(lat, long):
 
-    mod_range = [-.1, .1]
+    mod_range = [-.03, .03]
     lat_min_modifier = random.uniform(mod_range[0], mod_range[1])
     long_min_modifier = random.uniform(mod_range[0], mod_range[1])
     # Use min modifier as the range (therefore cant go lower than this)
