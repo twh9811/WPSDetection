@@ -17,8 +17,26 @@ def log(data, accurate):
     file = open(filename, "a")
     file.write(str(data) + "\n")
     file.close()
+
+
+def initial_location_estimation(target_mac):
+    data = {
+        "wifiAccessPoints": [{"macAddress":target_mac, "signalStrength":-57, "signalToNoiseRatio":40}],
+        "cellTowers": [
+            # Verizon 4G LTE
+            {"cellId": 18713601, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480, "signalStrength": -65},
+            {"cellId": 18713612, "locationAreaCode": 18688, "mobileCountryCode": 311, "mobileNetworkCode": 480,"signalStrength": -68},
+            # T-Mobile
+            {"cellId": 11812099, "locationAreaCode": 22527, "mobileCountryCode": 310, "mobileNetworkCode": 260, "signalStrength": -72}
+        ]
+    }
     
-def google_wps_triangulation(desired_mac, used_locations, desired_location=None):
+    response = requests.post(MAPS_URL, json=data)
+
+    received_location = response.json()['location']
+    return (received_location['lat'], received_location['lng'])
+
+def google_wps_triangulation(desired_mac, used_locations, desired_location):
     print(desired_location)
     accuracy_threshold = 150
     close_locations = []
@@ -43,10 +61,7 @@ def google_wps_triangulation(desired_mac, used_locations, desired_location=None)
         # data["wifiAccessPoints"].append({"macAddress":"f8-5b-3b-e0-05-fa", "signalStrength":-57, "signalToNoiseRatio":40})
         # data["wifiAccessPoints"].append({"macAddress":"08-36-c9-95-ee-71", "signalStrength":-57, "signalToNoiseRatio":40})
         # data["wifiAccessPoints"].append({"macAddress":"a0-55-1f-68-1d-39", "signalStrength":-57, "signalToNoiseRatio":40})
-        if(desired_location is None):
-            bssids = bssid_collection_via_wigle()
-        else:
-            bssids = bssid_collection_via_wigle(desired_location[0], desired_location[1])
+        bssids = bssid_collection_via_wigle(desired_location[0], desired_location[1])
             
         for bssid in bssids:
             access_point = {"macAddress":bssid, "signalStrength":-90, "signalToNoiseRatio":15}
@@ -75,8 +90,8 @@ def google_wps_triangulation(desired_mac, used_locations, desired_location=None)
     triangulated_location = [central_lat, central_long]
     return triangulated_location
     
-# Irondequoit (43.21313319463426, -77.5818301738431)
-def bssid_collection_via_wigle(lat=43.21313319463426, long=-77.5818301738431):
+# 43.2260006, -77.6435763
+def bssid_collection_via_wigle(lat=43.2260006, long=-77.6435763):
 
     mod_range = [-.1, .1]
     lat_min_modifier = random.uniform(mod_range[0], mod_range[1])
@@ -129,15 +144,12 @@ def bssid_collection_via_wigle(lat=43.21313319463426, long=-77.5818301738431):
     
 def main():
     max_tries = 3
-    test_mac = "80-78-71-c7-f4-96"
-    triangulated_location = None
+    target_mac = "80-78-71-c7-f4-96"
+    triangulated_location = initial_location_estimation(target_mac)
     used_locations = set()
     for i in range(max_tries):
         print("Try", i+1)
-        if(triangulated_location is None):
-            triangulated_location = google_wps_triangulation(test_mac, used_locations)
-        else:
-            triangulated_location = google_wps_triangulation(test_mac, used_locations, triangulated_location)
+        triangulated_location = google_wps_triangulation(target_mac, used_locations, triangulated_location)
     print("Final Est. Location:", triangulated_location)
 if __name__ == "__main__":
     main()
