@@ -67,3 +67,13 @@
 {'location': {'lat': 43.2366076, 'lng': -77.5265813}, 'accuracy': 27.205, "tag": "N"}
 {"location": {"lat": 43.2746673, "lng": -77.6377515}, "accuracy": 110, "tag": "N"}
 {"location": {"lat": 43.2491722, "lng": -77.6156585}, "accuracy": 110, "tag": "Y"}
+{'location': {'lat': 43.2027473, 'lng': -77.6295419}, 'accuracy': 64.068, "tag": "N"}
+{'location': {'lat': 43.2532566, 'lng': -77.6660848}, 'accuracy': 110, "tag": "N"}
+{'location': {'lat': 43.2503842, 'lng': -77.6674041}, 'accuracy': 75.781, "tag": "N"}
+{'location': {'lat': 43.2345044, 'lng': -77.6474571}, 'accuracy': 78.335, "tag": "Y"}
+{'location': {'lat': 43.2554528, 'lng': -77.6337702}, 'accuracy': 77.531, "tag": "N"}
+{'location': {'lat': 43.2587183, 'lng': -77.6466156}, 'accuracy': 113.589, "tag": "N"}
+{'location': {'lat': 43.2418022, 'lng': -77.6257513}, 'accuracy': 60.514, "tag": "Y"}
+{'location': {'lat': 43.2614644, 'lng': -77.6139047}, 'accuracy': 58.369, "tag": "N"}
+{'location': {'lat': 43.2575576, 'lng': -77.6345107}, 'accuracy': 103.642, "tag": "N"}
+{'location': {'lat': 43.2403504, 'lng': -77.6250758}, 'accuracy': 60.514, "tag": "Y"}

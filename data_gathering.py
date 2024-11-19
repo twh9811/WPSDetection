@@ -136,6 +136,7 @@ def main():
     for i in range(max_tries):
         print("Try", i+1)
         triangulated_location = google_wps_triangulation(target_mac, used_locations, triangulated_location)
+        log
     print("Final Est. Location:", triangulated_location)
 if __name__ == "__main__":
     main()

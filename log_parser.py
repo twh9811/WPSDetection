@@ -1,23 +1,23 @@
 import json
-import data_gathering
 from geopy import distance
 classified_logs = "logs/classified_accurate_log.txt"
+cheating_logs = "logs/manual_accurate_log.txt"
 normal_logs = "logs/accurate_log.txt"
-# How can we update this to reflect the actual location better? This determines the classification math...
-STARTING_CENTER_POINT = (43.2260006, -77.6435763)
 
-def check_radius(given_point):
-    # Kilometers 
-    radius = 6
-    calc_distance = distance.distance(STARTING_CENTER_POINT, given_point)
+STARTING_CENTER_POINT = (43.2260006, -77.6435763)
+TARGET_LOC = (43.235023195950276, -77.6273781379702)
+
+# Radius in kilometers
+def check_radius(given_point, starting_point=STARTING_CENTER_POINT, radius=2):
+    calc_distance = distance.distance(starting_point, given_point)
     return calc_distance <= radius
-    
-def classify_log(classified_logs, normal_logs):
+
+def classify_log(classification_type, normal_logs, cheating=False):
     lat_sum = 0
     lng_sum = 0
     total_accurate = 0
-    
-    with open(classified_logs, 'w') as classified_file:
+        
+    with open(classification_type, 'w') as classified_file:
         with open(normal_logs) as normal_file:
             for line in normal_file:
                 # Json module is stupid and doesnt accept single quotes...
@@ -28,7 +28,10 @@ def classify_log(classified_logs, normal_logs):
                 
                 # Classifies the point based on the distance from the center starting point
                 if 'tag' not in json_data:
-                    result = check_radius(est_point)
+                    if(cheating):
+                        result = check_radius(est_point,TARGET_LOC,1)
+                    else:
+                        result = check_radius(est_point)
                     if(result):
                         json_data['tag'] = "Y"
                         lat_sum += est_point[0]
@@ -45,6 +48,10 @@ def classify_log(classified_logs, normal_logs):
 def main():
     est_lat, est_lng = classify_log(classified_logs,normal_logs)
     print("Estimated Location: " + str(est_lat) + "," + str(est_lng))
+    
+    est_lat, est_lng = classify_log(cheating_logs,normal_logs,True)
+    print("Cheating Est Location: " + str(est_lat) + "," + str(est_lng))
+    
 
 if __name__ == "__main__":
     main()
