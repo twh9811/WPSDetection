@@ -8,7 +8,7 @@ STARTING_CENTER_POINT = (43.2260006, -77.6435763)
 TARGET_LOC = (43.235023195950276, -77.6273781379702)
 
 # Radius in kilometers
-def check_radius(given_point, starting_point=STARTING_CENTER_POINT, radius=5):
+def check_radius(given_point, starting_point=STARTING_CENTER_POINT, radius=4):
     calc_distance = distance.distance(starting_point, given_point)
     return calc_distance <= radius
 
